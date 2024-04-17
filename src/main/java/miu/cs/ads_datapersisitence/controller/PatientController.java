@@ -1,11 +1,10 @@
 package miu.cs.ads_datapersisitence.controller;
 
-import miu.cs.ads_datapersisitence.exception.NotFoundException;
+import miu.cs.ads_datapersisitence.exception.PatientNotFoundException;
 import miu.cs.ads_datapersisitence.model.Patient;
 import miu.cs.ads_datapersisitence.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,42 +15,39 @@ public class PatientController {
     @Autowired
     PatientService patientService;
 
-    @GetMapping("/")
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
     public List<Patient> getAllPatient() {
         return patientService.getAllPatient();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> getPatient(@PathVariable(value = "id") Integer id) throws NotFoundException {
-        var patient = patientService.getPatient(id);
-        if(patient == null){
-            throw  new NotFoundException(id + " not found");
-        }
-        return ResponseEntity.ok(patient);
+    @ResponseStatus(HttpStatus.OK)
+    public Patient getPatient(@PathVariable(value = "id") Integer id) throws PatientNotFoundException{
+        return patientService.getPatient(id);
     }
 
     @GetMapping("/search/{query}")
+    @ResponseStatus(HttpStatus.OK)
     public List<Patient> searchPatient(@PathVariable String query) {
         return patientService.searchPatient(query);
     }
 
-    @PostMapping("/")
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
     public void addPatient(@RequestBody Patient patient) {
         patientService.addPatient(patient);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Patient> updatePatient(@PathVariable(value = "id") Integer id, @RequestBody Patient patient)  throws NotFoundException {
-        var patient1 = patientService.getPatient(id);
-        if(patient1 == null){
-            throw  new NotFoundException(id + " not found");
-        }
-        return ResponseEntity.ok(patientService.updatePatient(id,patient));
+    public Patient updatePatient(@PathVariable(value = "id") Integer id, @RequestBody Patient patient)  throws PatientNotFoundException {
+        return patientService.updatePatient(id,patient);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePatient(@PathVariable(value = "id") Integer id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePatient(@PathVariable(value = "id") Integer id)  throws PatientNotFoundException {
         patientService.deletePatient(id);
     }
 }

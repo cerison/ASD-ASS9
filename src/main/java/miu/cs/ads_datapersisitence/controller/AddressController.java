@@ -14,7 +14,7 @@ public class AddressController {
     @Autowired
     AddressService addressService;
 
-    @GetMapping("/")
+    @GetMapping()
     public List<AddressDto> getAddress() {
         return addressService.getAddress();
     }

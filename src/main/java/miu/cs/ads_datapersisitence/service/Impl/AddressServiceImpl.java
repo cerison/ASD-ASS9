@@ -13,7 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
-public class AddressImpl implements AddressService {
+public class AddressServiceImpl implements AddressService {
     @Autowired
     AddressRepository addressRepository;
 
