@@ -1,13 +1,14 @@
 package miu.cs.ads_datapersisitence.service.util;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
 import javax.crypto.SecretKey;
 import java.time.Instant;
-//import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,4 +75,3 @@ public class JWTMgmtUtilityService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }
-

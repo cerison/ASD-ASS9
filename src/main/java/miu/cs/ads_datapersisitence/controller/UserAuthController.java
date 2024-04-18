@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = {"/citylibrary/api/v1/public/auth"})
+@RequestMapping(value = {"/ads/api/v1/public/auth"})
 public class UserAuthController {
 
     private JWTMgmtUtilityService jwtMgmtUtilityService;

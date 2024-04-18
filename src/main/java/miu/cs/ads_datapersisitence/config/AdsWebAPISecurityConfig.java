@@ -15,14 +15,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 
 @Configuration
 @EnableWebSecurity
 public class AdsWebAPISecurityConfig {
 
-    // Inject your services and filters as before
     private AdsUserDetailsService adsUserDetailsService;
     private JWTAuthFilter jwtAuthFilter;
 
@@ -34,9 +31,10 @@ public class AdsWebAPISecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.disable())  // Correctly disabling CSRF
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/ads/public/hello").permitAll()
+                    auth
+                            .requestMatchers("/ads/public/hello").permitAll()
                             .requestMatchers("/ads/api/v1/public/auth/**").permitAll()
                             .requestMatchers("/ads/api/v1/patient/**").authenticated();
                 })
